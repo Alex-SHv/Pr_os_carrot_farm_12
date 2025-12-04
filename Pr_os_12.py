@@ -92,9 +92,8 @@ def update_count():
 def save_result():
     global count
     try:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open("results.txt", "a", encoding="utf-8") as f:
-            f.write(f"{timestamp} — Собрано: {count}\n")
+            f.write(f"Собрано: {count}\n")
         messagebox.showinfo("Сохранено", f"Результат сохранён: {count}")
     except Exception as e:
         messagebox.showerror("Ошибка", f"Не удалось сохранить результат:\n{e}")
