@@ -1,7 +1,9 @@
-﻿import tkinter as tk
+import tkinter as tk
 import threading
 import time
 import os
+from datetime import datetime
+from tkinter import messagebox
 
 GROW_TIME = 5
 
@@ -10,6 +12,7 @@ class CarrotButton:
         self.master = master
         self.index = index
         self.state = 0
+        self.update_counter = update_counter  
 
         self.btn = tk.Button(master, text=f"Грядка {index+1}", bg="sienna4", fg="white", command=self.on_click)
         self.btn.place(x=x, y=y, width=160, height=50)
@@ -34,6 +37,7 @@ class CarrotButton:
             self.btn.config(bg="sienna4", fg="white", text=f"Грядка {self.index+1}")
             self.stage_label.config(text="Стадия: пусто")
             self.label_image.config(image='', text="")
+            self.update_counter()
 
     def grow_stage(self):
         def mark_grown():
@@ -84,6 +88,21 @@ def update_count():
     global count
     count += 1
     count_label.config(text=f"Собрано: {count}")
+
+def save_result():
+    """Сохраняет текущий счёт в файл results.txt с отметкой времени."""
+    global count
+    try:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open("results.txt", "a", encoding="utf-8") as f:
+            f.write(f"{timestamp} — Собрано: {count}\n")
+        messagebox.showinfo("Сохранено", f"Результат сохранён: {count}")
+    except Exception as e:
+        messagebox.showerror("Ошибка", f"Не удалось сохранить результат:\n{e}")
+
+save_btn = tk.Button(root, text="Сохранить", bg="steelblue", fg="white", command=save_result)
+save_btn.place(x=420, y=540, width=100, height=30)
+
 
 start_x = 50
 gap_x = 170
