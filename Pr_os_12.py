@@ -90,7 +90,6 @@ def update_count():
     count_label.config(text=f"Собрано: {count}")
 
 def save_result():
-    """Сохраняет текущий счёт в файл results.txt с отметкой времени."""
     global count
     try:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
